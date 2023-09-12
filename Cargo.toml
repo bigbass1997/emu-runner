@@ -1,0 +1,14 @@
+[package]
+name = "emu-runner"
+version = "0.1.0"
+edition = "2021"
+authors = ["Luke Stadem <bigbass1997.website@gmail.com>"]
+description = "Command builder and executor for various emulators."
+license = "MIT"
+repository = "https://github.com/bigbass1997/emu-runner"
+keywords = ["command", "builder", "emulator", "executor", "tas"]
+categories = ["emulators", "data-structures"]
+
+[dependencies]
+camino = "1.1"
+sha1_smol = "1"
