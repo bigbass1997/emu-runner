@@ -1,6 +1,6 @@
 [package]
 name = "emu-runner"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["Luke Stadem <bigbass1997.website@gmail.com>"]
 description = "Command builder and executor for various emulators."

@@ -8,6 +8,11 @@ pub struct FceuxContext {
     pub movie: Option<Utf8PathBuf>,
     pub lua: Option<Utf8PathBuf>,
     pub rom: Option<Utf8PathBuf>,
+    
+    /// If set, forces Old (false) or New (true) PPU mode.
+    /// 
+    /// **Note:** Only used when executable is `fceux` (linux binary) or `qfceux.exe`
+    pub ppu_mode: Option<bool>,
     pub working_dir: Utf8PathBuf,
 }
 impl EmulatorContext for FceuxContext {
@@ -64,6 +69,10 @@ impl EmulatorContext for FceuxContext {
                     if let Some(lua) = self.lua.as_ref() {
                         args.push("--loadlua".into());
                         args.push(lua.to_string());
+                    }
+                    if let Some(ppu_mode) = self.ppu_mode.as_ref() {
+                        args.push("--newppu".into());
+                        args.push(if *ppu_mode { "1".into() } else { "0".into() });
                     }
                 },
                 _ => ()
@@ -218,6 +227,7 @@ impl FceuxContext {
             movie: None,
             lua: None,
             rom: None,
+            ppu_mode: None,
             working_dir,
         })
     }
@@ -250,6 +260,13 @@ impl FceuxContext {
         let rom = rom.into();
         Self {
             rom: Some(rom.canonicalize_utf8().unwrap_or_else(|_| rom)),
+            ..self
+        }
+    }
+    
+    pub fn with_ppu_mode(self, ppu_mode: bool) -> Self {
+        Self {
+            ppu_mode: Some(ppu_mode),
             ..self
         }
     }
